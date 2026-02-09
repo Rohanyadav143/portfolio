@@ -61,15 +61,15 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>📍 Lucknow, Uttar Pradesh, India</li>
-              <li>📞 +91 98765 XXXXX</li>
-              <li>✉️ rohan.yadav@email.com</li>
+              <li>📞 +91 8423712322</li>
+              <li>✉️ rohn1895@gmail.com</li>
             </ul>
           </div>
         </div>
 
         {/* Divider */}
         <div className="border-t border-white/10 mt-12 pt-6 text-center text-sm text-gray-400">
-          © {new Date().getFullYear()} Rohan Yadav — Built with ❤️ using React & Tailwind
+          © {new Date().getFullYear()} Rohan Yadav — Built with ❤️ and support.
         </div>
 
       </div>
