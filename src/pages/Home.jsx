@@ -99,7 +99,7 @@ export default function Home() {
             <div className="flex gap-6 mt-6 mb-6 flex-wrap
             justify-center lg:justify-start">
               <a
-                href="/src/assets/resume/Rohan_Yadav_Resume.pdf"
+                href="/resume/Resume.pdf"
                 target="_blank"
                 className="px-6 py-2.5 border-2 border-yellow-400 rounded-md
                 text-lg font-semibold bg-gradient-to-r from-purple-500 to-blue-600
