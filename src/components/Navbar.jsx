@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { FaDownload } from "react-icons/fa"; // Download icon
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -43,15 +44,15 @@ export default function Navbar() {
               </li>
             ))}
 
-            {/* Resume */}
+            {/* Resume with Download Icon */}
             <li>
               <a
-                href="/src/assets/resume/Rohan_Yadav_Resume.pdf"
+                href="/resume/Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition transform hover:scale-110 hover:text-yellow-400"
+                className="flex items-center gap-1 transition transform hover:scale-110 hover:text-yellow-400"
               >
-                Resume
+                Resume <FaDownload />
               </a>
             </li>
           </ul>
@@ -89,13 +90,13 @@ export default function Navbar() {
           ))}
 
           <a
-            href="/src/assets/resume/Rohan_Yadav_Resume.pdf"
+            href="/resume/Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-lg hover:text-yellow-400"
+            className="text-lg flex items-center gap-1 hover:text-yellow-400"
             onClick={() => setOpen(false)}
           >
-            Resume
+            Resume <FaDownload />
           </a>
         </ul>
       </div>
