@@ -37,6 +37,16 @@ export default function Footer() {
                 </NavLink>
               </li>
               <li>
+                <NavLink to="/education" className="hover:text-yellow-400 transition">
+                  Education
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/certifications" className="hover:text-yellow-400 transition">
+                  Certificates
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to="/projects" className="hover:text-yellow-400 transition">
                   Projects
                 </NavLink>
