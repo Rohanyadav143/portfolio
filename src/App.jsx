@@ -10,6 +10,8 @@ import Projects from "./pages/Projects";
 import Skills from "./pages/Skills";
 import Contact from "./pages/Contact";
 
+import ScrollToTop from "./ScrollToTop";
+
 import Footer from "./components/Footer";
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
 
       {/* Page Content */}
       <div className="pt-16 bg-[#00091a] min-h-screen">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
