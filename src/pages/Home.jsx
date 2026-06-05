@@ -20,21 +20,28 @@ export default function Home() {
 
   const [wordIndex, setWordIndex] = useState(0);
   const [text, setText] = useState("");
+
   const charIndexRef = useRef(0);
   const timeoutRef = useRef(null);
 
   useEffect(() => {
     const currentWord = words[wordIndex];
 
+    // reset properly for each word
+    setText("");
+    charIndexRef.current = 0;
+
     const type = () => {
       if (charIndexRef.current < currentWord.length) {
-        setText((prev) => prev + currentWord.charAt(charIndexRef.current));
-        charIndexRef.current += 1;
+        const nextIndex = charIndexRef.current + 1;
+
+        setText(currentWord.slice(0, nextIndex)); // ✅ FIX (no skip issue)
+
+        charIndexRef.current = nextIndex;
+
         timeoutRef.current = setTimeout(type, 90);
       } else {
         timeoutRef.current = setTimeout(() => {
-          setText("");
-          charIndexRef.current = 0;
           setWordIndex((prev) => (prev + 1) % words.length);
         }, 800);
       }
@@ -71,7 +78,6 @@ export default function Home() {
               }}
             />
 
-            {/* OPEN TO WORK BADGE (IMAGE CORNER) */}
             <span
               className="absolute top-2 right-2 px-3 py-1 text-xs font-bold rounded-full"
               style={{
@@ -86,13 +92,11 @@ export default function Home() {
 
           {/* CONTENT */}
           <div className="text-center lg:text-left">
-            {/* NAME */}
             <h1 className="text-5xl font-extrabold">
               <span style={{ color: "#22d3ee" }}>Rohan</span>{" "}
               <span style={{ color: "#facc15" }}>Yadav</span>
             </h1>
 
-            {/* ROLE */}
             <h3 className="mt-4 text-2xl">
               I'm{" "}
               <span style={{ color: "#22c55e", textDecoration: "underline" }}>
@@ -102,16 +106,25 @@ export default function Home() {
 
             {/* SOCIAL */}
             <div className="flex gap-6 mt-6 text-2xl justify-center lg:justify-start">
-              <a href="https://github.com/Rohanyadav143" target="_blank">
+              <a
+                href="https://github.com/Rohanyadav143"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <FaGithub />
               </a>
               <a
                 href="https://www.linkedin.com/in/rohan-yadav-20b064255/"
                 target="_blank"
+                rel="noreferrer"
               >
                 <FaLinkedin />
               </a>
-              <a href="https://leetcode.com/u/rohn1895/" target="_blank">
+              <a
+                href="https://leetcode.com/u/rohn1895/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <FaLink />
               </a>
             </div>
@@ -149,7 +162,7 @@ export default function Home() {
         </a>
       </div>
 
-      {/* ANIMATION STYLE */}
+      {/* ANIMATION */}
       <style>
         {`
           @keyframes pulse {
