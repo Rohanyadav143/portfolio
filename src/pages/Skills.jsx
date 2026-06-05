@@ -1,75 +1,145 @@
-import React from "react";
+import { useMemo } from "react";
+import { useTheme } from "../context/ThemeContext";
 
-const skillsData = [
-  {
-    category: "💻 Programming Languages",
-    skills: [
-      { name: "Java", src: "https://www.vectorlogo.zone/logos/java/java-ar21.svg" },
-      { name: "C", src: "https://upload.wikimedia.org/wikipedia/commons/1/19/C_Logo.png" },
-    ],
-  },
-  {
-    category: "🎨 Frontend",
-    skills: [
-      { name: "HTML", src: "https://www.vectorlogo.zone/logos/w3_html5/w3_html5-ar21.svg" },
-      { name: "CSS", src: "https://www.vectorlogo.zone/logos/w3_css/w3_css-ar21.svg" },
-      { name: "JavaScript", src: "https://www.vectorlogo.zone/logos/javascript/javascript-ar21.svg" },
-      { name: "React", src: "https://www.vectorlogo.zone/logos/reactjs/reactjs-ar21.svg" },
-      { name: "Bootstrap", src: "https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-ar21.svg" },
-      { name: "Tailwind CSS", src: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-ar21.svg" },
-    ],
-  },
-  {
-    category: "⚙️ Backend & APIs",
-    skills: [
-      { name: "Node.js", src: "https://www.vectorlogo.zone/logos/nodejs/nodejs-ar21.svg" },
-      { name: "Express.js", src: "https://www.vectorlogo.zone/logos/expressjs/expressjs-ar21.svg" },
-      { name: "MySQL", src: "https://www.vectorlogo.zone/logos/mysql/mysql-ar21.svg" },
-      { name: "MongoDB", src: "https://www.vectorlogo.zone/logos/mongodb/mongodb-ar21.svg" },
-    ],
-  },
-  {
-    category: "☁️ DevOps & Cloud",
-    skills: [
-      { name: "Kubernetes", src: "https://www.vectorlogo.zone/logos/kubernetes/kubernetes-ar21.svg" },
-      { name: "AWS", src: "https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-ar21.svg" },
-      { name: "Docker", src: "https://www.vectorlogo.zone/logos/docker/docker-ar21.svg" },
-    ],
-  },
-  {
-    category: "🧰 Tools & Platforms",
-    skills: [
-      { name: "Git", src: "https://www.vectorlogo.zone/logos/git-scm/git-scm-ar21.svg" },
-      { name: "GitHub", src: "https://www.vectorlogo.zone/logos/github/github-ar21.svg" },
-      { name: "VS Code", src: "https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-ar21.svg" },
-      { name: "Eclipse", src: "https://www.vectorlogo.zone/logos/eclipse/eclipse-ar21.svg" },
-      { name: "IntelliJ", src: "https://img.icons8.com/?size=100&id=61466&format=png&color=000000" },
-    ],
-  },
-];
+// Images
+import java from "../assets/images/skill-Image/java.webp";
+import c from "../assets/images/skill-Image/C.webp";
+import html from "../assets/images/skill-Image/HTML.webp";
+import css from "../assets/images/skill-Image/CSS.webp";
+import js from "../assets/images/skill-Image/JS.webp";
+import react from "../assets/images/skill-Image/React.webp";
+import bootstrap from "../assets/images/skill-Image/Bootstrap.webp";
+import tailwind from "../assets/images/skill-Image/Tailwind.webp";
+import node from "../assets/images/skill-Image/Node.webp";
+import express from "../assets/images/skill-Image/Express.webp";
+import mySql from "../assets/images/skill-Image/MySQL.webp";
+import mongoDb from "../assets/images/skill-Image/MongoDB.webp";
+import aws from "../assets/images/skill-Image/AWS.webp";
+import kub from "../assets/images/skill-Image/Kubernetes.webp";
+import docker from "../assets/images/skill-Image/Docker.webp";
+import git from "../assets/images/skill-Image/Git.webp";
+import gitHub from "../assets/images/skill-Image/GitHub.webp";
+import vsCode from "../assets/images/skill-Image/VsCode.webp";
+import intellij from "../assets/images/skill-Image/Intellij.webp";
+import eclipse from "../assets/images/skill-Image/Eclipse.webp";
 
 export default function Skills() {
-  return (
-    <section className="bg-[#00091a] min-h-screen py-0 pb-16">
-      <h6 className="ml-[8%] mt-0 mb-10 font-bold text-orange-400">Skills ---------</h6>
+  const { darkMode } = useTheme();
 
-      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-8">
-        {skillsData.map((category, i) => (
+  const skillsData = useMemo(
+    () => [
+      {
+        category: "💻 Programming Languages",
+        skills: [
+          { name: "Java", src: java },
+          { name: "C", src: c },
+        ],
+      },
+      {
+        category: "🎨 Frontend",
+        skills: [
+          { name: "HTML", src: html },
+          { name: "CSS", src: css },
+          { name: "JavaScript", src: js },
+          { name: "React", src: react },
+          { name: "Bootstrap", src: bootstrap },
+          { name: "Tailwind", src: tailwind },
+        ],
+      },
+      {
+        category: "⚙️ Backend & APIs",
+        skills: [
+          { name: "Node.js", src: node },
+          { name: "Express", src: express },
+          { name: "MySQL", src: mySql },
+          { name: "MongoDB", src: mongoDb },
+        ],
+      },
+      {
+        category: "☁️ DevOps & Cloud",
+        skills: [
+          { name: "Kubernetes", src: kub },
+          { name: "AWS", src: aws },
+          { name: "Docker", src: docker },
+        ],
+      },
+      {
+        category: "🧰 Tools",
+        skills: [
+          { name: "Git", src: git },
+          { name: "GitHub", src: gitHub },
+          { name: "VS Code", src: vsCode },
+          { name: "Eclipse", src: eclipse },
+          { name: "IntelliJ IDEA", src: intellij },
+        ],
+      },
+    ],
+    [],
+  );
+
+  return (
+    <section
+      aria-label="Skills Section"
+      className="min-h-screen py-12 px-5"
+      style={{
+        background: darkMode ? "#000814" : "#f3f4f6",
+        color: darkMode ? "#e5e7eb" : "#111827",
+      }}
+    >
+      {/* SEO FRIENDLY HEADER */}
+      <header className="max-w-[1200px] mx-auto mb-10">
+        <h1 className="text-2xl font-bold border-l-4 border-purple-600 text-purple-500 pl-3">
+          Technical Skills
+        </h1>
+        <p className="text-sm opacity-70 mt-2 hidden">
+          Programming, Frontend, Backend, DevOps and Tools
+        </p>
+      </header>
+
+      <div className="max-w-[1200px] mx-auto space-y-10">
+        {skillsData.map((cat) => (
           <div
-            key={i}
-            className="bg-gradient-to-r from-gray-600 to-gray-400 rounded-2xl p-6 transition-transform transform hover:-translate-y-2 hover:shadow-xl"
+            key={cat.category}
+            className="rounded-xl p-6 border border-white/10 transition hover:-translate-y-1"
+            style={{
+              background: darkMode ? "#0f172a" : "#ffffff",
+              boxShadow: darkMode
+                ? "0 0 20px rgba(0,255,255,0.06)"
+                : "0 2px 10px rgba(0,0,0,0.06)",
+            }}
           >
-            <h2 className="text-yellow-400 font-bold text-2xl mb-4 ">
-              {category.category}
+            {/* CATEGORY TITLE */}
+            <h2 className="text-blue-600 font-semibold text-lg mb-6">
+              {cat.category}
             </h2>
-            <div className="flex flex-wrap justify-center items-center gap-16 p-10">
-              {category.skills.map((skill, idx) => (
-                <div key={idx} className="flex flex-col items-center">
+
+            {/* SKILLS GRID */}
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-8 place-items-center">
+              {cat.skills.map((skill) => (
+                <div
+                  key={skill.name}
+                  className="flex flex-col items-center group"
+                  title={skill.name}
+                  aria-label={skill.name}
+                >
                   <img
                     src={skill.src}
                     alt={skill.name}
-                    title={skill.name}
-                    className="w-40 h-20 object-contain brightness-150"
+                    loading="lazy"
+                    decoding="async"
+                    className="
+                      w-20 h-20 md:w-24 md:h-24
+                      object-contain
+                      transition-all duration-300
+                      group-hover:scale-110
+                      group-hover:drop-shadow-lg
+                      dark:brightness-125 dark:contrast-125
+                    "
+                    style={{
+                      filter: darkMode
+                        ? "brightness(1.2) contrast(1.2)"
+                        : "brightness(1)",
+                    }}
                   />
                 </div>
               ))}

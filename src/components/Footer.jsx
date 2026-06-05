@@ -1,87 +1,77 @@
 import { NavLink } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+import { FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
+import { useMemo } from "react";
 
 export default function Footer() {
+  const { darkMode } = useTheme();
+
+  const year = useMemo(() => new Date().getFullYear(), []);
+
   return (
-    <footer className="bg-gradient-to-r from-[#020617] to-[#020d2d] text-gray-300">
-      <div className="max-w-7xl mx-auto px-6 py-14">
-
-        {/* Top Grid */}
+    <footer
+      style={{
+        background: darkMode ? "#00091a" : "#e7eaee",
+        color: darkMode ? "#e5e7eb" : "#1f2937",
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-
-          {/* About */}
           <div>
-            <h3 className="text-white text-lg font-semibold mb-4">
-              About Rohan
-            </h3>
-            <p className="text-sm leading-relaxed text-gray-400">
+            <h3 className="font-semibold mb-4">About Me</h3>
+            <p className="text-sm">
               I’m a passionate Full Stack Developer focused on building clean,
               responsive, and user-friendly web applications using modern
               technologies.
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h3 className="text-white text-lg font-semibold mb-4">
-              Quick Links
-            </h3>
+            <h3 className="font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li>
-                <NavLink to="/" className="hover:text-yellow-400 transition">
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/about" className="hover:text-yellow-400 transition">
-                  About
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/education" className="hover:text-yellow-400 transition">
-                  Education
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/certifications" className="hover:text-yellow-400 transition">
-                  Certificates
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/projects" className="hover:text-yellow-400 transition">
-                  Projects
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/skills" className="hover:text-yellow-400 transition">
-                  Skills
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" className="hover:text-yellow-400 transition">
-                  Contact
-                </NavLink>
-              </li>
+              {[
+                ["Home", "/"],
+                ["About", "/about"],
+                ["Education", "/education"],
+                ["Certificates", "/certifications"],
+                ["Projects", "/projects"],
+                ["Skills", "/skills"],
+                ["Contact", "/contact"],
+              ].map(([name, path]) => (
+                <li key={name}>
+                  <NavLink to={path} className="hover:text-yellow-600">
+                    {name}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <h3 className="text-white text-lg font-semibold mb-4">
-              Contact
-            </h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>📍 Lucknow, Uttar Pradesh, India</li>
-              <li>📞 +91 8423712322</li>
-              <li>✉️ rohn1895@gmail.com</li>
+            <h3 className="font-semibold mb-4">Contact</h3>
+
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-center gap-2">
+                <FaMapMarkerAlt />
+                Lucknow, Uttar Pradesh, India
+              </li>
+
+              <li className="flex items-center gap-2">
+                <FaPhone />
+                +91 - 8423712322
+              </li>
+
+              <li className="flex items-center gap-2">
+                <FaEnvelope />
+                rohn1895@gmail.com
+              </li>
             </ul>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-white/10 mt-12 pt-6 text-center text-sm text-gray-400">
-          © {new Date().getFullYear()} Rohan Yadav — Built with ❤️ and support.
+        <div className="border-t border-black/10 mt-12 pt-8 text-center text-sm">
+          © {year} Built by :- Rohan Yadav
         </div>
-
       </div>
     </footer>
   );
