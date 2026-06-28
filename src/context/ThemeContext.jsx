@@ -3,8 +3,13 @@ import { createContext, useContext, useEffect, useState } from "react";
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(true);
+  // ✅ load initial value from localStorage
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved ? JSON.parse(saved) : false;
+  });
 
+  // ✅ apply theme + save to localStorage
   useEffect(() => {
     const root = document.documentElement;
 
@@ -15,6 +20,9 @@ export const ThemeProvider = ({ children }) => {
       root.style.backgroundColor = "#e7eaee";
       root.style.color = "#1f2937";
     }
+
+    // save preference
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
 
   const toggleTheme = () => setDarkMode((prev) => !prev);

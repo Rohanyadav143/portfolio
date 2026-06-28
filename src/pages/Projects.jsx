@@ -10,12 +10,21 @@ import P6 from "../assets/images/projects-image/Project4.webp";
 import P7 from "../assets/images/projects-image/Project3.webp";
 import P8 from "../assets/images/projects-image/Project2.webp";
 import P9 from "../assets/images/projects-image/Project1.webp";
+import P10 from "../assets/images/projects-image/Project10.png";
 
 export default function Projects() {
   const { darkMode } = useTheme();
 
   const projects = useMemo(
     () => [
+      {
+        title: "Task-List",
+        year: "2026",
+        tech: "React, Node, Context API",
+        image: P10,
+        deployed: "https://task-list-green-gamma.vercel.app/",
+        source: "https://github.com/Rohanyadav143/Task-List",
+      },
       {
         title: "Velora",
         year: "2025",
