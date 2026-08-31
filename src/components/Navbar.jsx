@@ -11,7 +11,7 @@ export default function Navbar() {
     () => [
       { name: "Home", path: "/" },
       { name: "About", path: "/about" },
-      { name: "Education", path: "/education" },
+      // { name: "Education", path: "/education" },
       { name: "Certificates", path: "/certifications" },
       { name: "Projects", path: "/projects" },
       { name: "Skills", path: "/skills" },

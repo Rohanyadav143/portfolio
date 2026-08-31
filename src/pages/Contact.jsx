@@ -85,7 +85,10 @@ export default function Contact() {
               <a href="https://linkedin.com" className="hover:text-yellow-400">
                 <FaLinkedin />
               </a>
-              <a href="#" className="hover:text-yellow-400">
+              <a
+                href="https://leetcode.com/u/rohn1895/"
+                className="hover:text-yellow-400"
+              >
                 <FaLaptopCode />
               </a>
             </div>

@@ -32,7 +32,7 @@ export default function Footer() {
               {[
                 ["Home", "/"],
                 ["About", "/about"],
-                ["Education", "/education"],
+                // ["Education", "/education"],
                 ["Certificates", "/certifications"],
                 ["Projects", "/projects"],
                 ["Skills", "/skills"],
