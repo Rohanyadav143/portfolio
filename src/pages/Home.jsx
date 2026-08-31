@@ -132,7 +132,7 @@ export default function Home() {
             {/* BUTTONS */}
             <div className="flex gap-5 mt-7 justify-center lg:justify-start flex-wrap">
               <a
-                href="/resume/Resume.pdf"
+                href="#"
                 target="_blank"
                 className="px-5 py-2 border border-yellow-400 rounded-md
                 hover:bg-yellow-400 hover:text-black transition"
