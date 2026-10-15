@@ -1,181 +1,183 @@
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { useTheme } from "../context/ThemeContext";
-
-import { BiMap, BiShareAlt, BiEnvelope, BiPhone } from "react-icons/bi";
-import { FaGithub, FaLinkedin, FaLaptopCode } from "react-icons/fa";
+import { BiEnvelope, BiMap, BiPhone, BiShareAlt } from "react-icons/bi";
+import { FaGithub, FaLaptopCode, FaLinkedin } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa6";
+import PageHeading from "../components/PageHeading";
+import Reveal from "../components/Reveal";
 
 export default function Contact() {
-  const { darkMode } = useTheme();
-  const [showToast, setShowToast] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [status, setStatus] = useState(null);
 
-  const cardStyle = useMemo(
-    () => ({
-      background: darkMode ? "#0f172a" : "#ffffff",
-      color: darkMode ? "#d6dae1" : "#1f2937",
-      border: "1px solid rgba(0,0,0,0.15)",
-    }),
-    [darkMode],
-  );
+  const handleSubmit = useCallback(async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
+    if (!serviceId || !templateId || !publicKey) {
+      setStatus({
+        type: "error",
+        message: "The contact form is not configured yet. Please email me directly using the address above.",
+      });
+      return;
+    }
 
+    const formData = new FormData(form);
     const templateParams = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      subject: e.target.subject.value,
-      message: e.target.message.value,
+      name: formData.get("name"),
+      email: formData.get("email"),
+      subject: formData.get("subject"),
+      message: formData.get("message"),
     };
 
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-      )
-      .then(() => {
-        e.target.reset();
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
+    setIsSending(true);
+    setStatus(null);
+    try {
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      form.reset();
+      setStatus({ type: "success", message: "Message sent successfully." });
+    } catch (error) {
+      console.error("[contact-form] Unable to send message:", error);
+      setStatus({
+        type: "error",
+        message: "Your message could not be sent. Please try again or email me directly.",
       });
+    } finally {
+      setIsSending(false);
+    }
   }, []);
 
   return (
-    <section
-      className="min-h-screen-100vh py-8 transition-all duration-300"
-      style={{
-        background: darkMode ? "#00091a" : "#e7eaee",
-        color: darkMode ? "#d6dae1" : "#1f2937",
-      }}
-    >
-      <div className="max-w-[210mm] mx-auto px-4">
-        {/* HEADING */}
-        <h2 className="border-l-4 border-orange-400 pl-3 mb-6 font-bold text-orange-400">
-          Contact
-        </h2>
+    <section className="page-shell">
+      <PageHeading
+        eyebrow="Get in touch"
+        title="Let’s build something."
+        description="Have a question or an opportunity to discuss? Feel free to reach out."
+      />
 
-        {/* GRID 1 */}
-        <div className="grid md:grid-cols-2 gap-6 mb-6">
-          {/* ADDRESS */}
-          <div className="p-5 rounded-xl" style={cardStyle}>
-            <div className="flex gap-3 items-start">
-              <BiMap className="text-2xl text-yellow-400" />
-              <div>
-                <p className="font-bold text-green-400">Address</p>
-                <p>Abdul Chalk Islam</p>
-                <p>Dandopur, Kushinagar</p>
-                <p>274304</p>
-              </div>
+      <div className="grid-layout contact-grid">
+        <Reveal className="surface-card contact-card">
+          <span className="contact-icon"><BiMap aria-hidden="true" /></span>
+          <div>
+            <h2>Address</h2>
+            <div className="contact-details">
+              <span>Abdul Chalk Islam</span>
+              <span>Dandopur, Kushinagar</span>
+              <span>274304</span>
             </div>
           </div>
+        </Reveal>
 
-          {/* SOCIAL */}
-          <div className="p-5 rounded-xl" style={cardStyle}>
-            <div className="flex gap-3 items-center mb-3">
-              <BiShareAlt className="text-2xl text-yellow-400" />
-              <p className="font-bold text-green-400">Social</p>
-            </div>
-
-            <div className="flex gap-4 text-2xl">
-              <a href="https://github.com" className="hover:text-yellow-400">
-                <FaGithub />
-              </a>
-              <a href="https://linkedin.com" className="hover:text-yellow-400">
-                <FaLinkedin />
-              </a>
+        <Reveal className="surface-card contact-card">
+          <span className="contact-icon"><BiShareAlt aria-hidden="true" /></span>
+          <div>
+            <h2>Social</h2>
+            <div className="social-row">
               <a
+                className="icon-link"
+                href="https://github.com/Rohanyadav143"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
+              ><FaGithub /></a>
+              <a
+                className="icon-link"
+                href="https://www.linkedin.com/in/rohan-yadav-20b064255/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
+              ><FaLinkedin /></a>
+              <a
+                className="icon-link"
                 href="https://leetcode.com/u/rohn1895/"
-                className="hover:text-yellow-400"
-              >
-                <FaLaptopCode />
-              </a>
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LeetCode profile"
+              ><FaLaptopCode /></a>
             </div>
           </div>
-        </div>
+        </Reveal>
 
-        {/* GRID 2 */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {/* EMAIL */}
-          <div className="p-5 rounded-xl" style={cardStyle}>
-            <div className="flex gap-3">
-              <BiEnvelope className="text-2xl text-yellow-400" />
-              <div>
-                <p className="font-bold text-green-400">Email</p>
-                <p>rohn1895@gmail.com</p>
-                <p>ry703606@gmail.com</p>
-              </div>
+        <Reveal className="surface-card contact-card">
+          <span className="contact-icon"><BiEnvelope aria-hidden="true" /></span>
+          <div>
+            <h2>Email</h2>
+            <div className="contact-details">
+              <a href="mailto:rohn1895@gmail.com">rohn1895@gmail.com</a>
+              <a href="mailto:ry703606@gmail.com">ry703606@gmail.com</a>
             </div>
           </div>
+        </Reveal>
 
-          {/* PHONE */}
-          <div className="p-5 rounded-xl" style={cardStyle}>
-            <div className="flex gap-3">
-              <BiPhone className="text-2xl text-yellow-400" />
-              <div>
-                <p className="font-bold text-green-400">Phone</p>
-                <p>+91 8423712322</p>
-                <p>+91 8604626646</p>
-              </div>
+        <Reveal className="surface-card contact-card">
+          <span className="contact-icon"><BiPhone aria-hidden="true" /></span>
+          <div>
+            <h2>Phone</h2>
+            <div className="contact-details">
+              <a href="tel:+918423712322">+91 8423712322</a>
+              <a href="tel:+918604626646">+91 8604626646</a>
             </div>
           </div>
-        </div>
-
-        {/* FORM */}
-        <h2 className="border-l-4 border-orange-400 pl-3 mb-6 font-bold text-orange-400">
-          Send Message
-        </h2>
-
-        <form
-          onSubmit={handleSubmit}
-          className="p-6 rounded-xl space-y-4 mb-4"
-          style={cardStyle}
-        >
-          <input
-            name="name"
-            placeholder="Name"
-            className="w-full p-2 rounded bg-transparent border border-gray-400"
-            required
-          />
-
-          <input
-            name="email"
-            placeholder="Email"
-            className="w-full p-2 rounded bg-transparent border border-gray-400"
-            required
-          />
-
-          <input
-            name="subject"
-            placeholder="Subject"
-            className="w-full p-2 rounded bg-transparent border border-gray-400"
-            required
-          />
-
-          <textarea
-            name="message"
-            rows="5"
-            placeholder="Message"
-            className="w-full p-2 rounded bg-transparent border border-gray-400"
-            required
-          />
-
-          <button
-            type="submit"
-            className="w-full py-2 rounded font-bold bg-cyan-500 text-black hover:bg-yellow-400 transition"
-          >
-            Send Message
-          </button>
-        </form>
-
-        {/* TOAST */}
-        {showToast && (
-          <div className="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
-            Message Sent Successfully!
-          </div>
-        )}
+        </Reveal>
       </div>
+
+      <section className="contact-form-wrap" aria-labelledby="send-message-heading">
+        <h2 className="section-label" id="send-message-heading">Send Message</h2>
+        <Reveal as="form" className="surface-card contact-form" onSubmit={handleSubmit}>
+          <div className="form-field">
+            <label htmlFor="contact-name">Name</label>
+            <input
+              id="contact-name"
+              name="name"
+              autoComplete="name"
+              placeholder="Your name"
+              required
+            />
+          </div>
+          <div className="form-field">
+            <label htmlFor="contact-email">Email</label>
+            <input
+              id="contact-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+          <div className="form-field form-field-full">
+            <label htmlFor="contact-subject">Subject</label>
+            <input
+              id="contact-subject"
+              name="subject"
+              placeholder="What would you like to discuss?"
+              required
+            />
+          </div>
+          <div className="form-field form-field-full">
+            <label htmlFor="contact-message">Message</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows="5"
+              placeholder="Write your message..."
+              required
+            />
+          </div>
+          <button className="button button-primary form-field-full" type="submit" disabled={isSending}>
+            {isSending ? "Sending..." : "Send Message"}
+            {!isSending && <FaArrowRight aria-hidden="true" />}
+          </button>
+          {status && (
+            <p className={`form-status ${status.type}`} role="status">
+              {status.message}
+            </p>
+          )}
+        </Reveal>
+      </section>
     </section>
   );
 }

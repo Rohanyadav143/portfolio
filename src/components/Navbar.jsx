@@ -1,17 +1,17 @@
-import { useState, useMemo, useCallback } from "react";
-import { NavLink } from "react-router-dom";
-import { FaMoon, FaSun } from "react-icons/fa";
-import { useTheme } from "../context/ThemeContext";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa";
+import useTheme from "../context/useTheme";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { darkMode, toggleTheme } = useTheme();
-
   const navItems = useMemo(
     () => [
       { name: "Home", path: "/" },
       { name: "About", path: "/about" },
-      // { name: "Education", path: "/education" },
+      { name: "Education", path: "/education" },
       { name: "Certificates", path: "/certifications" },
       { name: "Projects", path: "/projects" },
       { name: "Skills", path: "/skills" },
@@ -20,96 +20,115 @@ export default function Navbar() {
     [],
   );
 
-  const toggleMenu = useCallback(() => {
-    setOpen((prev) => !prev);
+  const closeMenu = useCallback(() => setOpen(false), []);
+
+  useEffect(() => {
+    const updateScroll = () => setScrolled(window.scrollY > 12);
+    updateScroll();
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    return () => window.removeEventListener("scroll", updateScroll);
   }, []);
 
-  const closeMenu = useCallback(() => {
-    setOpen(false);
-  }, []);
+  useEffect(() => {
+    if (!open) return undefined;
+    document.body.classList.add("menu-open");
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") closeMenu();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.classList.remove("menu-open");
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open, closeMenu]);
+
+  const navLinkClass = ({ isActive }) => `nav-link${isActive ? " active" : ""}`;
 
   return (
-    <nav
-      className="w-full sticky top-0 z-50 border-b border-black/10"
-      style={{
-        background: darkMode ? "#00091a" : "#e7eaee",
-        color: darkMode ? "#d6dae1" : "#1f2937",
-      }}
-    >
-      {/* INNER WRAPPER (IMPORTANT FIX) */}
-      <div className="max-w-[1200px] mx-auto px-4 flex justify-between items-center h-16">
-        {/* LOGO */}
-        <NavLink to="/" className="text-xl font-bold">
-          <span className="bg-gradient-to-r from-yellow-400 to-purple-600 bg-clip-text text-transparent">
-            Rohan
-          </span>{" "}
-          <span className="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
-            Yadav
-          </span>
-        </NavLink>
+    <nav className={`navbar${scrolled ? " scrolled" : ""}`} aria-label="Main navigation">
+      <div className="navbar-inner">
+        <Link to="/" className="brand" aria-label="Rohan Yadav home">
+          <span className="brand-mark" aria-hidden="true">RY</span>
+          <span className="brand-name">Rohan <span>Yadav</span></span>
+        </Link>
 
-        {/* DESKTOP */}
-        <ul className="hidden md:flex items-center gap-6">
+        <div className="desktop-nav">
           {navItems.map((item) => (
-            <li key={item.name}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  `transition ${
-                    isActive
-                      ? "text-green-400 font-bold"
-                      : "hover:text-yellow-400"
-                  }`
-                }
-              >
-                {item.name}
-              </NavLink>
-            </li>
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.path === "/"}
+              className={navLinkClass}
+            >
+              {item.name}
+            </NavLink>
           ))}
+        </div>
 
-          <button onClick={toggleTheme} className="ml-4 text-xl">
+        <div className="nav-actions">
+          <Link className="button button-primary nav-cta" to="/contact">Let&apos;s talk</Link>
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${darkMode ? "light" : "dark"} theme`}
+            title={`Switch to ${darkMode ? "light" : "dark"} theme`}
+          >
             {darkMode ? <FaSun /> : <FaMoon />}
           </button>
-        </ul>
-
-        {/* MOBILE BUTTON */}
-        <button onClick={toggleMenu} className="md:hidden text-2xl">
-          ☰
-        </button>
+          <button
+            type="button"
+            className="menu-toggle"
+            onClick={() => setOpen(true)}
+            aria-label="Open navigation menu"
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+          >
+            <FaBars />
+          </button>
+        </div>
       </div>
 
-      {/* MOBILE MENU */}
       {open && (
-        <div
-          className="fixed inset-0 z-50"
-          style={{
-            background: darkMode ? "#00091a" : "#f4f6f8",
-          }}
-        >
-          <div className="flex justify-between p-5">
-            <button onClick={toggleTheme}>{darkMode ? "☀️" : "🌙"}</button>
-
-            <button onClick={closeMenu} className="text-2xl">
-              ✕
-            </button>
+        <div className="mobile-panel" id="mobile-navigation">
+          <div className="mobile-panel-header">
+            <Link to="/" className="brand" onClick={closeMenu}>
+              <span className="brand-mark" aria-hidden="true">RY</span>
+              <span className="brand-name">Rohan <span>Yadav</span></span>
+            </Link>
+            <div className="nav-actions">
+              <button
+                type="button"
+                className="theme-toggle"
+                onClick={toggleTheme}
+                aria-label={`Switch to ${darkMode ? "light" : "dark"} theme`}
+              >
+                {darkMode ? <FaSun /> : <FaMoon />}
+              </button>
+              <button
+                type="button"
+                className="menu-close"
+                onClick={closeMenu}
+                aria-label="Close navigation menu"
+              >
+                <FaTimes />
+              </button>
+            </div>
           </div>
-
-          <div className="flex flex-col items-center gap-6 mt-10 text-xl">
+          <div className="mobile-nav-links">
             {navItems.map((item) => (
               <NavLink
-                key={item.name}
+                key={item.path}
                 to={item.path}
+                end={item.path === "/"}
                 onClick={closeMenu}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-green-400 font-bold"
-                    : "hover:text-yellow-400"
-                }
+                className={navLinkClass}
               >
                 {item.name}
               </NavLink>
             ))}
           </div>
+          <p className="mobile-nav-footer">Full Stack Developer · Lucknow, India</p>
         </div>
       )}
     </nav>

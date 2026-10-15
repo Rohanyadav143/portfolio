@@ -1,27 +1,15 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { ThemeContext } from "./themeContext";
 
-const ThemeContext = createContext();
-
-export const ThemeProvider = ({ children }) => {
-  // ✅ load initial value from localStorage
+export default function ThemeProvider({ children }) {
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem("darkMode");
-    return saved ? JSON.parse(saved) : false;
+    return saved ? JSON.parse(saved) : true;
   });
 
-  // ✅ apply theme + save to localStorage
   useEffect(() => {
     const root = document.documentElement;
-
-    if (darkMode) {
-      root.style.backgroundColor = "#00091a";
-      root.style.color = "#e5e7eb";
-    } else {
-      root.style.backgroundColor = "#e7eaee";
-      root.style.color = "#1f2937";
-    }
-
-    // save preference
+    root.dataset.theme = darkMode ? "dark" : "light";
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
 
@@ -32,6 +20,4 @@ export const ThemeProvider = ({ children }) => {
       {children}
     </ThemeContext.Provider>
   );
-};
-
-export const useTheme = () => useContext(ThemeContext);
+}
