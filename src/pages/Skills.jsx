@@ -23,14 +23,14 @@ import Reveal from "../components/Reveal";
 
 const skillsData = [
   {
-    category: "💻 Programming Languages",
+    category: "Programming Languages",
     skills: [
       { name: "Java", src: java },
       { name: "C", src: c },
     ],
   },
   {
-    category: "🎨 Frontend",
+    category: "Frontend",
     skills: [
       { name: "HTML", src: html },
       { name: "CSS", src: css },
@@ -41,7 +41,7 @@ const skillsData = [
     ],
   },
   {
-    category: "⚙️ Backend & APIs",
+    category: "Backend & APIs",
     skills: [
       { name: "Node.js", src: node },
       { name: "Express", src: express },
@@ -50,7 +50,7 @@ const skillsData = [
     ],
   },
   {
-    category: "☁️ DevOps & Cloud",
+    category: "DevOps & Cloud",
     skills: [
       { name: "Kubernetes", src: kub },
       { name: "AWS", src: aws },
@@ -58,7 +58,7 @@ const skillsData = [
     ],
   },
   {
-    category: "🧰 Tools",
+    category: "Tools",
     skills: [
       { name: "Git", src: git },
       { name: "GitHub", src: gitHub },
@@ -71,7 +71,7 @@ const skillsData = [
 
 export default function Skills() {
   return (
-    <section className="page-shell">
+    <section className="page-shell skills-page">
       <PageHeading
         eyebrow="What I work with"
         title="Tools of the trade."
@@ -79,9 +79,12 @@ export default function Skills() {
       />
 
       <div className="skills-groups">
-        {skillsData.map((category) => (
-          <Reveal key={category.category} className="surface-card skill-category">
-            <h2>{category.category}</h2>
+        {skillsData.map((category, index) => (
+          <Reveal as="section" key={category.category} className="skill-category">
+            <div className="skill-category-heading">
+              <span className="skill-group-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <h2>{category.category}</h2>
+            </div>
             <div className="skills-grid">
               {category.skills.map((skill) => (
                 <div className="skill-item" key={skill.name} title={skill.name}>

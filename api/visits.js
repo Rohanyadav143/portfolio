@@ -13,6 +13,18 @@ current = redis.call("INCR", KEYS[3])
 return {current, 1}
 `;
 
+class VisitorCounterConfigurationError extends Error {
+  constructor() {
+    super("Visitor counter credentials are not configured.");
+    this.name = "VisitorCounterConfigurationError";
+  }
+}
+
+function logCounterFailure(action, error) {
+  if (error instanceof VisitorCounterConfigurationError) return;
+  console.error(`[visitor-counter] Unable to ${action}:`, error);
+}
+
 function send(response, status, body) {
   if (typeof response.status === "function") {
     return response.status(status).json(body);
@@ -39,7 +51,7 @@ async function redisCommand(command) {
   const redisUrl = process.env.UPSTASH_REDIS_REST_URL?.trim();
   const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
   if (!redisUrl || !redisToken) {
-    throw new Error("Visitor counter credentials are not configured.");
+    throw new VisitorCounterConfigurationError();
   }
 
   const parsedUrl = new URL(redisUrl);
@@ -72,7 +84,7 @@ export async function handler(request, response) {
       }
       return send(response, 200, { count });
     } catch (error) {
-      console.error("[visitor-counter] Unable to read visit count:", error);
+      logCounterFailure("read visit count", error);
       return send(response, 503, { error: "The portfolio visit counter is unavailable." });
     }
   }
@@ -116,7 +128,7 @@ export async function handler(request, response) {
     }
     return send(response, 200, { count });
   } catch (error) {
-    console.error("[visitor-counter] Unable to record visit:", error);
+    logCounterFailure("record visit", error);
     return send(response, 503, { error: "The portfolio visit counter is unavailable." });
   }
 }

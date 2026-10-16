@@ -25,7 +25,7 @@ const interests = [
 
 export default function About() {
   return (
-    <section className="page-shell">
+    <section className="page-shell about-page">
       <PageHeading
         eyebrow="A little about me"
         title="Curiosity into code."

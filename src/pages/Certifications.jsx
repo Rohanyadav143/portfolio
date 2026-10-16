@@ -35,7 +35,7 @@ const certificates = [
 
 export default function Certifications() {
   return (
-    <section className="page-shell">
+    <section className="page-shell certifications-page">
       <PageHeading
         eyebrow="Learning & credentials"
         title="Certifications."

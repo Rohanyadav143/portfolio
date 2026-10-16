@@ -97,16 +97,20 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section className="page-shell">
+    <section className="page-shell projects-page">
       <PageHeading
         eyebrow="Selected work"
         title="Projects built to solve."
         description="A selection of projects built with the tools and technologies I work with. Explore a live version or browse the source."
       />
 
-      <div className="grid-layout project-grid">
+      <div className="project-grid">
         {projects.map((project, index) => (
-          <Reveal key={`${project.title}-${project.year}`} as="article" className="surface-card project-card">
+          <Reveal
+            key={`${project.title}-${project.year}`}
+            as="article"
+            className={`project-card${index % 2 === 1 ? " project-card--reversed" : ""}`}
+          >
             <div className="project-preview">
               <img
                 src={project.image}
@@ -114,7 +118,6 @@ export default function Projects() {
                 loading="lazy"
                 decoding="async"
               />
-              <span className="project-number">{String(index + 1).padStart(2, "0")}</span>
             </div>
             <div className="project-content">
               <div className="project-meta">
@@ -126,7 +129,7 @@ export default function Projects() {
               <div className="project-actions">
                 {project.deployed !== "#" && (
                   <a
-                    className="button button-primary"
+                    className="project-action-link project-action-link--primary"
                     href={project.deployed}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -136,7 +139,7 @@ export default function Projects() {
                   </a>
                 )}
                 <a
-                  className="button"
+                  className="project-action-link"
                   href={project.source}
                   target="_blank"
                   rel="noopener noreferrer"

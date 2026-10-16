@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import { FaEnvelope, FaGithub, FaLinkedin, FaLink, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import VisitorCount from "./VisitorCount";
 
 const footerLinks = [
   ["Home", "/"],
   ["About", "/about"],
+  ["Experience", "/experience"],
   ["Education", "/education"],
   ["Certificates", "/certifications"],
   ["Projects", "/projects"],
@@ -25,6 +26,11 @@ export default function Footer() {
             I’m a passionate Full Stack Developer focused on building clean,
             responsive, and user-friendly web applications using modern technologies.
           </p>
+          <div className="footer-socials" aria-label="Social profiles">
+            <a href="https://github.com/Rohanyadav143" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"><FaGithub /></a>
+            <a href="https://www.linkedin.com/in/rohan-yadav-20b064255/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"><FaLinkedin /></a>
+            <a href="https://leetcode.com/u/rohn1895/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode profile"><FaLink /></a>
+          </div>
         </div>
 
         <div>

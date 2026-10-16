@@ -41,7 +41,7 @@ const achievements = [
 
 export default function Education() {
   return (
-    <section className="page-shell">
+    <section className="page-shell education-page">
       <PageHeading
         eyebrow="Education & milestones"
         title="Learning by building."

@@ -22,7 +22,10 @@ function getSessionId() {
 
 function getCachedCount() {
   try {
-    const count = Number(window.sessionStorage.getItem(countStorageKey));
+    const cached = window.sessionStorage.getItem(countStorageKey);
+    if (!cached) return null;
+
+    const count = Number(cached);
     return Number.isSafeInteger(count) && count >= 0 ? count : null;
   } catch {
     return null;
@@ -30,21 +33,22 @@ function getCachedCount() {
 }
 
 export default function VisitorCount() {
-  const [count, setCount] = useState(getCachedCount);
-  const [displayCount, setDisplayCount] = useState(() => getCachedCount() ?? 0);
+  const [initialCount] = useState(getCachedCount);
+  const [count, setCount] = useState(initialCount);
+  const [displayCount, setDisplayCount] = useState(initialCount ?? 0);
   const [error, setError] = useState("");
 
   useEffect(() => {
     let active = true;
-    if (count !== null) return undefined;
-
     const sessionId = getSessionId();
     let request = requestsBySession.get(sessionId);
     if (!request) {
       request = fetch("/api/visits", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId }),
+        method: initialCount === null ? "POST" : "GET",
+        ...(initialCount === null && {
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sessionId }),
+        }),
       })
         .then(async (response) => {
           const data = await response.json();
@@ -74,7 +78,7 @@ export default function VisitorCount() {
     return () => {
       active = false;
     };
-  }, [count]);
+  }, [initialCount]);
 
   useEffect(() => {
     if (count === null) return undefined;
@@ -97,13 +101,13 @@ export default function VisitorCount() {
   }, [count]);
 
   return (
-    <span className="visitor-count" aria-live="polite" title={error || "Portfolio visits"}>
+    <span className="visitor-count" role="status" aria-live="polite" title={error || undefined}>
       <FaEye aria-hidden="true" />
-      {count === null
-        ? error
-          ? "Counter unavailable"
-          : "Loading visits"
-        : `${displayCount.toLocaleString()} portfolio visits`}
+      <span className="visitor-count-label">Portfolio Visits</span>
+      <span className="visitor-count-separator" aria-hidden="true">&middot;</span>
+      <span className="visitor-count-value">
+        {count === null ? (error ? "Unavailable" : "Loading") : displayCount.toLocaleString()}
+      </span>
     </span>
   );
 }

@@ -3,8 +3,12 @@ import { ThemeContext } from "./themeContext";
 
 export default function ThemeProvider({ children }) {
   const [darkMode, setDarkMode] = useState(() => {
-    const saved = localStorage.getItem("darkMode");
-    return saved ? JSON.parse(saved) : true;
+    try {
+      const saved = localStorage.getItem("darkMode");
+      return saved === null ? true : JSON.parse(saved);
+    } catch {
+      return true;
+    }
   });
 
   useEffect(() => {

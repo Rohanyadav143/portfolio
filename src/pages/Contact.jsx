@@ -2,13 +2,24 @@ import { useCallback, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { BiEnvelope, BiMap, BiPhone, BiShareAlt } from "react-icons/bi";
 import { FaGithub, FaLaptopCode, FaLinkedin } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowRight, FaCheck, FaCopy } from "react-icons/fa6";
 import PageHeading from "../components/PageHeading";
 import Reveal from "../components/Reveal";
 
 export default function Contact() {
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState(null);
+  const [copyStatus, setCopyStatus] = useState("");
+
+  const copyEmail = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText("rohn1895@gmail.com");
+      setCopyStatus("Email copied");
+    } catch {
+      setCopyStatus("Clipboard unavailable — select the email above");
+    }
+    window.setTimeout(() => setCopyStatus(""), 2200);
+  }, []);
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -51,82 +62,77 @@ export default function Contact() {
   }, []);
 
   return (
-    <section className="page-shell">
+    <section className="page-shell contact-page">
       <PageHeading
         eyebrow="Get in touch"
         title="Let’s build something."
         description="Have a question or an opportunity to discuss? Feel free to reach out."
       />
 
-      <div className="grid-layout contact-grid">
-        <Reveal className="surface-card contact-card">
-          <span className="contact-icon"><BiMap aria-hidden="true" /></span>
-          <div>
-            <h2>Address</h2>
-            <div className="contact-details">
-              <span>Abdul Chalk Islam</span>
-              <span>Dandopur, Kushinagar</span>
-              <span>274304</span>
+      <div className="contact-layout">
+        <Reveal as="aside" className="contact-info-panel" aria-label="Contact details">
+          <p className="contact-overline">Direct contact</p>
+          <section className="contact-email-feature" aria-labelledby="contact-email-heading">
+            <span className="contact-feature-label" id="contact-email-heading"><BiEnvelope aria-hidden="true" /> Email</span>
+            <a className="contact-primary-email" href="mailto:rohn1895@gmail.com">rohn1895@gmail.com</a>
+            <div className="contact-email-actions">
+              <button className="email-copy-button" type="button" onClick={copyEmail}>
+                {copyStatus === "Email copied" ? <FaCheck aria-hidden="true" /> : <FaCopy aria-hidden="true" />}
+                {copyStatus || "Copy email"}
+              </button>
+              <span className="sr-only" role="status" aria-live="polite">{copyStatus}</span>
             </div>
-          </div>
-        </Reveal>
+          </section>
 
-        <Reveal className="surface-card contact-card">
-          <span className="contact-icon"><BiShareAlt aria-hidden="true" /></span>
-          <div>
-            <h2>Social</h2>
+          <div className="contact-detail-list">
+            <section className="contact-detail-row" aria-labelledby="contact-address-heading">
+              <span className="contact-row-icon contact-row-icon--blue"><BiMap aria-hidden="true" /></span>
+              <div>
+                <h2 id="contact-address-heading">Address</h2>
+                <div className="contact-details">
+                  <span>Abdul Chalk Islam</span>
+                  <span>Dandopur, Kushinagar</span>
+                  <span>274304</span>
+                </div>
+              </div>
+            </section>
+
+            <section className="contact-detail-row" aria-labelledby="contact-phone-heading">
+              <span className="contact-row-icon contact-row-icon--green"><BiPhone aria-hidden="true" /></span>
+              <div>
+                <h2 id="contact-phone-heading">Phone</h2>
+                <div className="contact-details">
+                  <a href="tel:+918423712322">+91 8423712322</a>
+                  <a href="tel:+918604626646">+91 8604626646</a>
+                </div>
+              </div>
+            </section>
+
+            <section className="contact-detail-row" aria-labelledby="contact-other-email-heading">
+              <span className="contact-row-icon contact-row-icon--coral"><BiEnvelope aria-hidden="true" /></span>
+              <div>
+                <h2 id="contact-other-email-heading">Other email</h2>
+                <div className="contact-details">
+                  <a href="mailto:ry703606@gmail.com">ry703606@gmail.com</a>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <section className="contact-social-section" aria-labelledby="contact-social-heading">
+            <h2 id="contact-social-heading"><BiShareAlt aria-hidden="true" /> Social</h2>
             <div className="social-row">
-              <a
-                className="icon-link"
-                href="https://github.com/Rohanyadav143"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub profile"
-              ><FaGithub /></a>
-              <a
-                className="icon-link"
-                href="https://www.linkedin.com/in/rohan-yadav-20b064255/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn profile"
-              ><FaLinkedin /></a>
-              <a
-                className="icon-link"
-                href="https://leetcode.com/u/rohn1895/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LeetCode profile"
-              ><FaLaptopCode /></a>
+              <a className="icon-link" href="https://github.com/Rohanyadav143" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"><FaGithub /></a>
+              <a className="icon-link" href="https://www.linkedin.com/in/rohan-yadav-20b064255/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"><FaLinkedin /></a>
+              <a className="icon-link" href="https://leetcode.com/u/rohn1895/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode profile"><FaLaptopCode /></a>
             </div>
-          </div>
+          </section>
         </Reveal>
 
-        <Reveal className="surface-card contact-card">
-          <span className="contact-icon"><BiEnvelope aria-hidden="true" /></span>
-          <div>
-            <h2>Email</h2>
-            <div className="contact-details">
-              <a href="mailto:rohn1895@gmail.com">rohn1895@gmail.com</a>
-              <a href="mailto:ry703606@gmail.com">ry703606@gmail.com</a>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal className="surface-card contact-card">
-          <span className="contact-icon"><BiPhone aria-hidden="true" /></span>
-          <div>
-            <h2>Phone</h2>
-            <div className="contact-details">
-              <a href="tel:+918423712322">+91 8423712322</a>
-              <a href="tel:+918604626646">+91 8604626646</a>
-            </div>
-          </div>
-        </Reveal>
-      </div>
-
-      <section className="contact-form-wrap" aria-labelledby="send-message-heading">
-        <h2 className="section-label" id="send-message-heading">Send Message</h2>
-        <Reveal as="form" className="surface-card contact-form" onSubmit={handleSubmit}>
+        <section className="contact-form-wrap" aria-labelledby="send-message-heading">
+          <p className="contact-overline">Start a conversation</p>
+          <h2 className="section-label" id="send-message-heading">Send Message</h2>
+          <Reveal as="form" className="contact-form" onSubmit={handleSubmit}>
           <div className="form-field">
             <label htmlFor="contact-name">Name</label>
             <input
@@ -176,8 +182,9 @@ export default function Contact() {
               {status.message}
             </p>
           )}
-        </Reveal>
-      </section>
+          </Reveal>
+        </section>
+      </div>
     </section>
   );
 }

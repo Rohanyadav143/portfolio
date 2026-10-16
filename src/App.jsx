@@ -9,6 +9,7 @@ import Certifications from "./pages/Certifications";
 import Projects from "./pages/Projects";
 import Skills from "./pages/Skills";
 import Contact from "./pages/Contact";
+import Experience from "./pages/Experience";
 import Reveal from "./components/Reveal";
 
 export default function App() {
@@ -21,10 +22,11 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/education" element={<Education />} />
+            {/* <Route path="/education" element={<Education />} /> */}
             <Route path="/certifications" element={<Certifications />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/skills" element={<Skills />} />
+            {/* <Route path="/experience" element={<Experience />} /> */}
             <Route path="/contact" element={<Contact />} />
             <Route
               path="*"

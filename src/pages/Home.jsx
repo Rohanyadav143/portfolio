@@ -11,6 +11,7 @@ import {
 import heroImg from "../assets/images/Hero.webp";
 import Reveal from "../components/Reveal";
 
+
 const words = [
   "Dedicated",
   "Focused",
@@ -65,29 +66,34 @@ export default function Home() {
         <div className="hero-copy">
           <p className="availability">Open to Work</p>
           <p className="eyebrow">Full Stack Developer · Lucknow, India</p>
-          <h1 className="hero-title">Rohan <span>Yadav.</span></h1>
+          <h1 className="hero-title">
+            Rohan <span>Yadav.</span>
+          </h1>
           <p className="hero-role">
-            I&apos;m <span>{text}</span><span className="typing-caret" aria-hidden="true" />
+            I&apos;m <span>{text}</span>
+            <span className="typing-caret" aria-hidden="true" />
           </p>
           <p className="hero-intro">
-            A Computer Science Engineering student and Full-Stack MERN Developer.
-            I build dynamic, responsive web applications and bring a strong
-            foundation in Java and Data Structures &amp; Algorithms.
+            A Computer Science Engineering student and Full-Stack MERN
+            Developer. I build dynamic, responsive web applications and bring a
+            strong foundation in Java and Data Structures &amp; Algorithms.
           </p>
 
           <div className="hero-actions">
             <Link className="button button-primary" to="/projects">
               Explore My Work <FaArrowRight aria-hidden="true" />
             </Link>
-            <Link className="button" to="/contact">Let&apos;s connect</Link>
+            <Link className="button" to="/contact">
+              Let&apos;s connect
+            </Link>
             <a
               className="button"
-              href="https://www.notion.so"
+              href="/resume/Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Visit Notion"
+              aria-label="Visit my resume"
             >
-              <FaBook aria-hidden="true" /> Notion
+              <FaBook aria-hidden="true" /> Resume
             </a>
           </div>
 
@@ -133,9 +139,31 @@ export default function Home() {
             <strong>Rohan Yadav</strong>
             <span>Computer Science Engineering · Full Stack Developer</span>
           </div>
+          <div
+            className="hero-tech-chip hero-tech-chip--react"
+            aria-hidden="true"
+          >
+            React <span>UI</span>
+          </div>
+          <div
+            className="hero-tech-chip hero-tech-chip--java"
+            aria-hidden="true"
+          >
+            Java <span>DSA</span>
+          </div>
+          <div
+            className="hero-tech-chip hero-tech-chip--node"
+            aria-hidden="true"
+          >
+            Node.js <span>API</span>
+          </div>
         </div>
 
-        <a className="scroll-cue" href="#highlights" aria-label="Scroll to highlights">
+        <a
+          className="scroll-cue"
+          href="#highlights"
+          aria-label="Scroll to highlights"
+        >
           <span>Scroll to explore</span>
           <FaArrowDown aria-hidden="true" />
           <span />
@@ -158,7 +186,7 @@ export default function Home() {
         </div>
         <div className="intro-stat">
           <strong>Computer Science</strong>
-          <span>B.Tech, R.R. Group Of Institution · 2022–2026</span>
+          <span>MERN & DSA Instructor</span>
         </div>
       </Reveal>
     </>
