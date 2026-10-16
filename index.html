@@ -3,10 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem("darkMode");
+        if (savedTheme !== null) {
+          document.documentElement.dataset.theme = JSON.parse(savedTheme)
+            ? "dark"
+            : "light";
+        }
+      } catch {
+        // The React theme provider falls back to dark mode when storage is unavailable.
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- Primary SEO -->
     <title>Rohan Yadav | Full Stack Developer | React & Java Developer</title>
-    <meta name="description" content="Rohan Yadav is a Full Stack Developer skilled in React, Java, Spring Boot, MySQL, JavaScript, HTML, CSS and modern web development. Explore projects, skills and experience."/>
-    <meta name="keywords" content="Rohan Yadav, Full Stack Developer, React Developer, Java Developer, Spring Boot Developer, MERN Stack Developer, Software Engineer, Web Developer, Portfolio"/>
+    <meta
+      name="description"
+      content="Rohan Yadav is a Full Stack Developer skilled in React, Java, Spring Boot, MySQL, JavaScript, HTML, CSS and modern web development. Explore projects, skills and experience."
+    />
+    <meta
+      name="keywords"
+      content="Rohan Yadav, Full Stack Developer, React Developer, Java Developer, Spring Boot Developer, MERN Stack Developer, Software Engineer, Web Developer, Portfolio"
+    />
     <meta name="author" content="Rohan Yadav" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <!-- Canonical URL -->
@@ -15,11 +39,17 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://therohanyadav.me/" />
     <meta property="og:title" content="Rohan Yadav | Full Stack Developer" />
-    <meta property="og:description" content="Portfolio of Rohan Yadav showcasing Full Stack Development projects, skills and experience."/>
+    <meta
+      property="og:description"
+      content="Portfolio of Rohan Yadav showcasing Full Stack Development projects, skills and experience."
+    />
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Rohan Yadav | Full Stack Developer" />
-    <meta name="twitter:description" content="Portfolio of Rohan Yadav showcasing projects, skills and experience."/>
+    <meta
+      name="twitter:description"
+      content="Portfolio of Rohan Yadav showcasing projects, skills and experience."
+    />
     <!-- Favicon -->
     <link rel="icon" href="/src/assets/images/Hero.webp" />
   </head>

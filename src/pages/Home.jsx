@@ -1,8 +1,16 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaGithub, FaLinkedin, FaLink, FaBook } from "react-icons/fa";
+import {
+  FaArrowDown,
+  FaArrowRight,
+  FaBook,
+  FaGithub,
+  FaLinkedin,
+  FaLink,
+} from "react-icons/fa";
 import heroImg from "../assets/images/Hero.webp";
-import { useTheme } from "../context/ThemeContext";
+import Reveal from "../components/Reveal";
+
 
 const words = [
   "Dedicated",
@@ -16,162 +24,171 @@ const words = [
 ];
 
 export default function Home() {
-  const { darkMode } = useTheme();
-
   const [wordIndex, setWordIndex] = useState(0);
-  const [text, setText] = useState("");
-
+  const [text, setText] = useState(() =>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "Full-Stack Developer"
+      : "",
+  );
   const charIndexRef = useRef(0);
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-    const currentWord = words[wordIndex];
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return undefined;
 
-    // reset properly for each word
-    setText("");
+    const currentWord = words[wordIndex];
     charIndexRef.current = 0;
 
     const type = () => {
-      if (charIndexRef.current < currentWord.length) {
-        const nextIndex = charIndexRef.current + 1;
+      const nextIndex = charIndexRef.current + 1;
+      setText(currentWord.slice(0, nextIndex));
+      charIndexRef.current = nextIndex;
 
-        setText(currentWord.slice(0, nextIndex)); // ✅ FIX (no skip issue)
-
-        charIndexRef.current = nextIndex;
-
-        timeoutRef.current = setTimeout(type, 90);
+      if (nextIndex < currentWord.length) {
+        timeoutRef.current = window.setTimeout(type, 75);
       } else {
-        timeoutRef.current = setTimeout(() => {
-          setWordIndex((prev) => (prev + 1) % words.length);
-        }, 800);
+        timeoutRef.current = window.setTimeout(
+          () => setWordIndex((previous) => (previous + 1) % words.length),
+          1100,
+        );
       }
     };
 
-    timeoutRef.current = setTimeout(type, 100);
-
-    return () => clearTimeout(timeoutRef.current);
+    timeoutRef.current = window.setTimeout(type, 180);
+    return () => window.clearTimeout(timeoutRef.current);
   }, [wordIndex]);
 
   return (
-    <section
-      style={{
-        background: darkMode ? "#000814" : "#e7eaee",
-        color: darkMode ? "#e5e7eb" : "#1f2937",
-        minHeight: "80vh",
-        display: "flex",
-        alignItems: "center",
-        padding: "40px 16px",
-      }}
-    >
-      <div style={{ maxWidth: "1100px", margin: "auto", width: "100%" }}>
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          {/* IMAGE */}
-          <div className="relative">
-            <img
-              src={heroImg}
-              alt="Rohan Yadav Full Stack Developer"
-              style={{
-                width: "280px",
-                borderRadius: "16px",
-                border: "2px solid #a855f7",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-              }}
-            />
+    <>
+      <section className="home-hero">
+        <div className="hero-grid" aria-hidden="true" />
+        <div className="hero-copy">
+          <p className="availability">Open to Work</p>
+          <p className="eyebrow">Full Stack Developer · Lucknow, India</p>
+          <h1 className="hero-title">
+            Rohan <span>Yadav.</span>
+          </h1>
+          <p className="hero-role">
+            I&apos;m <span>{text}</span>
+            <span className="typing-caret" aria-hidden="true" />
+          </p>
+          <p className="hero-intro">
+            A Computer Science Engineering student and Full-Stack MERN
+            Developer. I build dynamic, responsive web applications and bring a
+            strong foundation in Java and Data Structures &amp; Algorithms.
+          </p>
 
-            <span
-              className="absolute top-2 right-2 px-3 py-1 text-xs font-bold rounded-full"
-              style={{
-                background: "#22c55e",
-                color: "black",
-                animation: "pulse 1.5s infinite",
-              }}
+          <div className="hero-actions">
+            <Link className="button button-primary" to="/projects">
+              Explore My Work <FaArrowRight aria-hidden="true" />
+            </Link>
+            <Link className="button" to="/contact">
+              Let&apos;s connect
+            </Link>
+            <a
+              className="button"
+              href="/resume/Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit my resume"
             >
-              🟢 Open to Work
-            </span>
+              <FaBook aria-hidden="true" /> Resume
+            </a>
           </div>
 
-          {/* CONTENT */}
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-extrabold">
-              <span style={{ color: "#22d3ee" }}>Rohan</span>{" "}
-              <span style={{ color: "#facc15" }}>Yadav</span>
-            </h1>
-
-            <h3 className="mt-4 text-2xl">
-              I'm{" "}
-              <span style={{ color: "#22c55e", textDecoration: "underline" }}>
-                {text}
-              </span>
-            </h3>
-
-            {/* SOCIAL */}
-            <div className="flex gap-6 mt-6 text-2xl justify-center lg:justify-start">
-              <a
-                href="https://github.com/Rohanyadav143"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <FaGithub />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/rohan-yadav-20b064255/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <FaLinkedin />
-              </a>
-              <a
-                href="https://leetcode.com/u/rohn1895/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <FaLink />
-              </a>
-            </div>
-
-            {/* BUTTONS */}
-            <div className="flex gap-5 mt-7 justify-center lg:justify-start flex-wrap">
-              <a
-                href="#"
-                target="_blank"
-                className="px-5 py-2 border border-yellow-400 rounded-md
-                hover:bg-yellow-400 hover:text-black transition"
-              >
-                Resume
-              </a>
-
-              <Link
-                to="/contact"
-                className="px-5 py-2 border border-green-400 rounded-md
-                hover:bg-green-400 hover:text-black transition"
-              >
-                Hire Me
-              </Link>
-            </div>
+          <div className="hero-socials" aria-label="Social profiles">
+            <a
+              className="icon-link"
+              href="https://github.com/Rohanyadav143"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Rohan Yadav on GitHub"
+            >
+              <FaGithub />
+            </a>
+            <a
+              className="icon-link"
+              href="https://www.linkedin.com/in/rohan-yadav-20b064255/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Rohan Yadav on LinkedIn"
+            >
+              <FaLinkedin />
+            </a>
+            <a
+              className="icon-link"
+              href="https://leetcode.com/u/rohn1895/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Rohan Yadav on LeetCode"
+            >
+              <FaLink />
+            </a>
           </div>
         </div>
 
-        {/* FLOAT BUTTON */}
-        <a
-          href="https://www.notion.so"
-          target="_blank"
-          className="fixed bottom-5 right-5 w-12 h-12 flex items-center justify-center
-          rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 text-black"
-        >
-          <FaBook />
-        </a>
-      </div>
+        <div className="hero-portrait-wrap">
+          <img
+            className="hero-portrait"
+            src={heroImg}
+            alt="Rohan Yadav, Full Stack Developer"
+            fetchPriority="high"
+          />
+          <div className="hero-image-caption">
+            <strong>Rohan Yadav</strong>
+            <span>Computer Science Engineering · Full Stack Developer</span>
+          </div>
+          <div
+            className="hero-tech-chip hero-tech-chip--react"
+            aria-hidden="true"
+          >
+            React <span>UI</span>
+          </div>
+          <div
+            className="hero-tech-chip hero-tech-chip--java"
+            aria-hidden="true"
+          >
+            Java <span>DSA</span>
+          </div>
+          <div
+            className="hero-tech-chip hero-tech-chip--node"
+            aria-hidden="true"
+          >
+            Node.js <span>API</span>
+          </div>
+        </div>
 
-      {/* ANIMATION */}
-      <style>
-        {`
-          @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
-          }
-        `}
-      </style>
-    </section>
+        <a
+          className="scroll-cue"
+          href="#highlights"
+          aria-label="Scroll to highlights"
+        >
+          <span>Scroll to explore</span>
+          <FaArrowDown aria-hidden="true" />
+          <span />
+        </a>
+      </section>
+
+      <Reveal
+        as="section"
+        className="intro-strip reveal-stagger"
+        id="highlights"
+        aria-label="Portfolio highlights"
+      >
+        <div className="intro-stat">
+          <strong>800+ coding problems</strong>
+          <span>Solved across LeetCode, GFG, and HackerRank</span>
+        </div>
+        <div className="intro-stat">
+          <strong>Full-Stack MERN</strong>
+          <span>Responsive web applications and projects</span>
+        </div>
+        <div className="intro-stat">
+          <strong>Computer Science</strong>
+          <span>MERN & DSA Instructor</span>
+        </div>
+      </Reveal>
+    </>
   );
 }

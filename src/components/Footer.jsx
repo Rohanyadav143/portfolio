@@ -1,77 +1,65 @@
-import { NavLink } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
-import { FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
-import { useMemo } from "react";
+import { Link } from "react-router-dom";
+import { FaEnvelope, FaGithub, FaLinkedin, FaLink, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import VisitorCount from "./VisitorCount";
+
+const footerLinks = [
+  ["Home", "/"],
+  ["About", "/about"],
+  ["Experience", "/experience"],
+  ["Education", "/education"],
+  ["Certificates", "/certifications"],
+  ["Projects", "/projects"],
+  ["Skills", "/skills"],
+  ["Contact", "/contact"],
+];
 
 export default function Footer() {
-  const { darkMode } = useTheme();
-
-  const year = useMemo(() => new Date().getFullYear(), []);
-
   return (
-    <footer
-      style={{
-        background: darkMode ? "#00091a" : "#e7eaee",
-        color: darkMode ? "#e5e7eb" : "#1f2937",
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          <div>
-            <h3 className="font-semibold mb-4">About Me</h3>
-            <p className="text-sm">
-              I’m a passionate Full Stack Developer focused on building clean,
-              responsive, and user-friendly web applications using modern
-              technologies.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
-              {[
-                ["Home", "/"],
-                ["About", "/about"],
-                // ["Education", "/education"],
-                ["Certificates", "/certifications"],
-                ["Projects", "/projects"],
-                ["Skills", "/skills"],
-                ["Contact", "/contact"],
-              ].map(([name, path]) => (
-                <li key={name}>
-                  <NavLink to={path} className="hover:text-yellow-600">
-                    {name}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Contact</h3>
-
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-2">
-                <FaMapMarkerAlt />
-                Lucknow, Uttar Pradesh, India
-              </li>
-
-              <li className="flex items-center gap-2">
-                <FaPhone />
-                +91 - 8423712322
-              </li>
-
-              <li className="flex items-center gap-2">
-                <FaEnvelope />
-                rohn1895@gmail.com
-              </li>
-            </ul>
+    <footer className="site-footer">
+      <div className="footer-inner">
+        <div className="footer-about">
+          <Link to="/" className="brand">
+            <span className="brand-mark" aria-hidden="true">RY</span>
+            <span className="brand-name">Rohan <span>Yadav</span></span>
+          </Link>
+          <p>
+            I’m a passionate Full Stack Developer focused on building clean,
+            responsive, and user-friendly web applications using modern technologies.
+          </p>
+          <div className="footer-socials" aria-label="Social profiles">
+            <a href="https://github.com/Rohanyadav143" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"><FaGithub /></a>
+            <a href="https://www.linkedin.com/in/rohan-yadav-20b064255/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"><FaLinkedin /></a>
+            <a href="https://leetcode.com/u/rohn1895/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode profile"><FaLink /></a>
           </div>
         </div>
 
-        <div className="border-t border-black/10 mt-12 pt-8 text-center text-sm">
-          © {year} Built by :- Rohan Yadav
+        <div>
+          <h2 className="footer-heading">Explore</h2>
+          <nav className="footer-links" aria-label="Footer navigation">
+            {footerLinks.map(([name, path]) => (
+              <Link key={path} to={path}>{name}</Link>
+            ))}
+          </nav>
         </div>
+
+        <div>
+          <h2 className="footer-heading">Contact</h2>
+          <div className="footer-links">
+            <span className="footer-contact-row">
+              <FaMapMarkerAlt aria-hidden="true" /> Lucknow, Uttar Pradesh, India
+            </span>
+            <a className="footer-contact-row" href="tel:+918423712322">
+              <FaPhone aria-hidden="true" /> +91 - 8423712322
+            </a>
+            <a className="footer-contact-row" href="mailto:rohn1895@gmail.com">
+              <FaEnvelope aria-hidden="true" /> rohn1895@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <span>© {new Date().getFullYear()} Built by :- Rohan Yadav</span>
+        <VisitorCount />
       </div>
     </footer>
   );
