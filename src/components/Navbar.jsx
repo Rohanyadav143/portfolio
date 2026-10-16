@@ -180,7 +180,7 @@ export default function Navbar() {
             <Link className="button button-primary mobile-nav-cta" to="/contact" onClick={() => closeMenu()}>
               Let&apos;s talk
             </Link>
-            <p className="mobile-nav-footer">Full Stack Developer · Lucknow, India</p>
+            <p className="mobile-nav-footer">Full Stack Developer · Noida, Uttar Pradesh, India</p>
           </section>
         </div>,
         document.body,

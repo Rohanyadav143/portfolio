@@ -52,7 +52,7 @@ export default function About() {
 
           <div className="personal-info" aria-label="Personal information">
             <div className="info-item"><FaBirthdayCake aria-hidden="true" /> DOB: 20 October 2004</div>
-            <div className="info-item"><FaCity aria-hidden="true" /> Lucknow, U.P</div>
+            <div className="info-item"><FaCity aria-hidden="true" /> Noida, Uttar Pradesh, India</div>
             <a className="info-item" href="tel:+918423712322"><FaPhone aria-hidden="true" /> +91-8423712322</a>
             <a className="info-item" href="mailto:rohn1895@gmail.com"><FaEnvelope aria-hidden="true" /> rohn1895@gmail.com</a>
           </div>

@@ -46,7 +46,7 @@ export default function Footer() {
           <h2 className="footer-heading">Contact</h2>
           <div className="footer-links">
             <span className="footer-contact-row">
-              <FaMapMarkerAlt aria-hidden="true" /> Lucknow, Uttar Pradesh, India
+              <FaMapMarkerAlt aria-hidden="true" /> Noida, Uttar Pradesh, India
             </span>
             <a className="footer-contact-row" href="tel:+918423712322">
               <FaPhone aria-hidden="true" /> +91 - 8423712322

@@ -2272,7 +2272,13 @@ h1, h2, h3, .brand, .button, .nav-link {
 }
 
 @media (max-width: 720px) {
-  .hero-title { font-size: clamp(3rem, 8vw, 3.75rem); line-height: 0.98; }
+  .hero-image-caption {
+    position: static;
+    margin-top: 0.65rem;
+    padding: 0.6rem 0.75rem;
+  }
+  .hero-image-caption strong { font-size: 0.8rem; }
+  .hero-image-caption span { font-size: 0.66rem; line-height: 1.4; }
   .page-title { font-size: clamp(2rem, 5.6vw, 2.5rem); }
   .page-shell { padding-top: clamp(3.5rem, 10vw, 5rem); }
   .page-heading { margin-bottom: 2rem; }

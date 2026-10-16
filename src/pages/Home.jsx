@@ -11,7 +11,6 @@ import {
 import heroImg from "../assets/images/Hero.webp";
 import Reveal from "../components/Reveal";
 
-
 const words = [
   "Dedicated",
   "Focused",
@@ -34,7 +33,9 @@ export default function Home() {
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (reduceMotion) return undefined;
 
     const currentWord = words[wordIndex];
@@ -65,7 +66,9 @@ export default function Home() {
         <div className="hero-grid" aria-hidden="true" />
         <div className="hero-copy">
           <p className="availability">Open to Work</p>
-          <p className="eyebrow">Full Stack Developer · Lucknow, India</p>
+          <p className="eyebrow">
+            Full Stack Developer · Noida, Uttar Pradesh, India
+          </p>
           <h1 className="hero-title">
             Rohan <span>Yadav.</span>
           </h1>
@@ -88,7 +91,7 @@ export default function Home() {
             </Link>
             <a
               className="button"
-              href="/resume/Resume.pdf"
+              // href="/resume/Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit my resume"
